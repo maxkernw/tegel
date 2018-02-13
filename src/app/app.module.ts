@@ -6,7 +6,7 @@ import { NgModule } from '@angular/core';
 
 import { CalendarModule } from 'angular-calendar';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import appRoutes from './app.routes';
+import {appRoutes} from './app.routes';
 
 import { AppComponent } from './app.component';
 import { ReactiveFormsModule } from '@angular/forms';
