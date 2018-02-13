@@ -1,0 +1,50 @@
+<button (click)="logout()" class="btn-danger btn-block">Logout</button>
+
+<div class="container">
+  <div class="row text-center">
+    <div class="col-md">
+      <div class="btn-group">
+        <div class="btn btn-primary" mwlCalendarPreviousView [view]="view" [(viewDate)]="viewDate" (viewDateChange)="activeDayIsOpen = false">
+          Previous
+        </div>
+        <div class="btn btn-outline-secondary" mwlCalendarToday [(viewDate)]="viewDate">
+          Today
+        </div>
+        <div class="btn btn-primary" mwlCalendarNextView [view]="view" [(viewDate)]="viewDate" (viewDateChange)="activeDayIsOpen = false">
+          Next
+        </div>
+      </div>
+
+      <mwl-calendar-month-view [viewDate]="viewDate" [events]="events" (eventClicked)="eventClicked({event: $event.event})" (dayClicked)="dayClicked($event.day)"
+        (eventTimesChanged)="eventTimesChanged($event)">
+
+      </mwl-calendar-month-view>
+      <mwl-calendar-open-day-events 
+      [isOpen]="activeDayIsOpen && monthEvents.length > 0" 
+      [events]="monthEvents" (eventClicked)="handleEvent('Clicked', $event.event)">
+      </mwl-calendar-open-day-events>
+    </div>
+    <div class="col-md">
+
+      <form class="form-custom" [formGroup]="myform">
+        <div class="form-group">
+          <input placeholder="Namn" type="text" class="form-control" formControlName="title" required>
+        </div>
+        <div class="form-group">
+          <label>Start datum</label>
+          <input type="date" class="form-control" formControlName="date" required>
+        </div>
+        <div class="form-group">
+          <label>Starttid</label>
+          <input type="time" class="form-control" formControlName="time" required>
+        </div>
+        <div class="form-group">
+          <label>Sluttid</label>
+          <input type="time" class="form-control" formControlName="endtime" required>
+        </div>
+        <button class="btn btn-primary btn-block" (click)="pushData()">Lägg till</button>
+
+      </form>
+    </div>
+  </div>
+

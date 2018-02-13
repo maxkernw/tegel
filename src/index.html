@@ -1,14 +1,31 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
   <title>Events</title>
   <base href="/">
+  <link href="https://unpkg.com/font-awesome@4.7.0/css/font-awesome.css" rel="stylesheet">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <script src="https://www.gstatic.com/firebasejs/4.9.1/firebase.js"></script>
+  <script>
+    // Initialize Firebase
+    var config = {
+      apiKey: "AIzaSyDJcX1IY4TpHTJd3aVOF53OmnEnyXe-KVc",
+      authDomain: "tegel-c3286.firebaseapp.com",
+      databaseURL: "https://tegel-c3286.firebaseio.com",
+      projectId: "tegel-c3286",
+      storageBucket: "tegel-c3286.appspot.com",
+      messagingSenderId: "859468822835"
+    };
+    firebase.initializeApp(config);
+  </script>
 </head>
+
 <body>
   <app-root></app-root>
 </body>
+
 </html>
