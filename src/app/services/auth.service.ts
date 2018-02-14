@@ -10,12 +10,12 @@ export class AuthService {
   constructor(private _firebaseAuth: AngularFireAuth, private router: Router) {
     this.user = _firebaseAuth.authState;
     this.user.subscribe((user) => {
-        if (user) {
-          this.userDetails = user;
-        } else {
-          this.userDetails = null;
-        }
+      if (user) {
+        this.userDetails = user;
+      } else {
+        this.userDetails = null;
       }
+    }
     );
   }
   signInWithFacebook() {
@@ -32,10 +32,22 @@ export class AuthService {
     return this.user;
   }
   isLoggedIn() {
-    return this.user;
+    if (this.userDetails == null ) {
+      return false;
+    } else {
+      return true;
+    }
   }
   logout() {
     this._firebaseAuth.auth.signOut()
       .then((res) => this.router.navigate(['/']));
+  }
+  signUpRegular(email, password) {
+    const credential = firebase.auth.EmailAuthProvider.credential(email, password);
+    return this._firebaseAuth.auth.createUserWithEmailAndPassword(email, password)
+  }
+  signInRegular(email, password) {
+    const credential = firebase.auth.EmailAuthProvider.credential(email, password);
+    return this._firebaseAuth.auth.signInWithEmailAndPassword(email, password)
   }
 }

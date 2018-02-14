@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CalendarEvent } from 'calendar-utils';
 import { Subject } from 'rxjs/Subject';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import {
   startOfDay,
@@ -11,6 +11,7 @@ import {
   endOfMonth,
   isSameDay,
   isSameMonth,
+  isSameHour,
   addHours
 } from 'date-fns';
 import { CalendarEventTimesChangedEvent, CalendarEventAction } from 'angular-calendar';
@@ -48,8 +49,8 @@ export class CalendarComponent implements OnInit {
     this.eventsObservable = this.getEvents('/events');
     console.log(this.eventsObservable);
     this.myform = new FormGroup({
-      title: new FormControl(),
-      date: new FormControl(),
+      title: new FormControl('', Validators.minLength(2)),
+      date: new FormControl('', Validators.minLength(1)),
       time: new FormControl(),
       endtime: new FormControl()
     });
@@ -60,35 +61,34 @@ export class CalendarComponent implements OnInit {
     return this.db.list(listPath).valueChanges();
   }
 
-  eventClicked(ev) {
-
-  }
 
   addEvent(a) {
     this.events = [];
-    console.log(a);
     for (const ev of a) {
       this.events.push({
         start: new Date(ev.date + ' ' + ev.startime),
         end: new Date(ev.date + ' ' + ev.endtime),
         title: `${ev.title}  user: ${ev.email} \n tid: ${ev.startime} till: ${ev.endtime}`,
-        color: { primary: 'pink', secondary: 'pink' },
+        color: { primary: ev.color, secondary: ev.color },
         id: ev.id,
-
       });
     }
   }
 
   pushData() {
-    const id = '_' + Math.random().toString(36).substr(2, 9);
-    this.ref = this.db.list('events').push({
-      date: this.myform.value.date,
-      endtime: this.myform.value.endtime,
-      startime: this.myform.value.time,
-      title: this.myform.value.title,
-      email: this.currentUser,
-      id: id
-    });
+    if (this.myform.valid) {
+      const id = '_' + Math.random().toString(36).substr(2, 9);
+      this.ref = this.db.list('events').push({
+        date: this.myform.value.date,
+        endtime: this.myform.value.endtime,
+        startime: this.myform.value.time,
+        title: this.myform.value.title,
+        email: this.currentUser,
+        id: id,
+        color: '#' + Math.floor(Math.random() * 16777215).toString(16)
+      });
+      this.myform.reset();
+    }
   }
 
   removeData(d, a) {
@@ -104,17 +104,11 @@ export class CalendarComponent implements OnInit {
       return actions.map(action => ({ key: action.key, ...action.payload.val() }));
     }).subscribe(items => {
       return items.map(item => {
-        if(item.id === ev.id && item.email === this.currentUser) {
+        if (item.id === ev.id && item.email === this.currentUser) {
           this.db.list('events').remove(item.key);
         }
       });
     });
-
-
-  }
-
-  remove(ref) {
-
   }
 
   dayClicked({ date, events }: { date: Date, events: CalendarEvent[] }) {
@@ -129,7 +123,7 @@ export class CalendarComponent implements OnInit {
       }
     }
     this.myform.controls['date'].setValue(date.toISOString().substring(0, 10));
- 
+
   }
 
   eventTimesChanged({ event, newStart, newEnd }: CalendarEventTimesChangedEvent): void {

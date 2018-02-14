@@ -1,3 +1,25 @@
-<div>
-<router-outlet></router-outlet>
+<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+    <a class="navbar-brand" href="#">Navbar</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" (click)="isNavbarCollapsed = !isNavbarCollapsed" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault"
+        aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarsExampleDefault" [ngbCollapse]="isNavbarCollapsed">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" *ngIf="!authService.isLoggedIn()" routerLink="/register" routerLinkActive="active">Registrering</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" *ngIf="!authService.isLoggedIn()" routerLink="/" routerLinkActive="active">Logga in</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" *ngIf="authService.isLoggedIn()" (click)="logout()">Logga ut</a>
+            </li>
+
+        </ul>
+    </div>
+</nav>
+<div class="container">
+
+    <router-outlet></router-outlet>
 </div>

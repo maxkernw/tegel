@@ -1,0 +1,16 @@
+<form class="form-custom"  (ngSubmit)="onSubmit()" [formGroup]="myform">
+  <div class="form-group">
+    <input placeholder="Email" type="email" class="form-control" formControlName="email" required>
+    <div class="alert alert-danger" *ngIf="myform.controls.email.errors?.email && myform.value.email.length > 5">Fel fel fel fel!</div>
+
+  </div>
+  <div class="form-group">
+    <input type="password" placeholder="Lösenord" class="form-control" formControlName="password" required>
+  </div>
+  <div class="form-group">
+    <input type="password" placeholder="Samma lösenord igen rå" formControlName="confirmPassword" class="form-control" id="confirmPassword">
+  </div>
+  <div class="alert alert-danger" *ngIf="myform.errors.mismatch">Lösenorden matchar ju inte för fan....</div>
+  <button class="btn btn-primary btn-block">Submit</button>
+
+</form>
