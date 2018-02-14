@@ -24,12 +24,14 @@ export class RegisterComponent implements OnInit {
     }, this.passwordMatchValidator)
   }
   passwordMatchValidator(g: FormGroup) {
-    return g.value.password=== g.value.confirmPassword
-       ? {mismatch: false} : {'mismatch': true};
- }
+    return g.value.password === g.value.confirmPassword
+      ? { mismatch: false } : { 'mismatch': true };
+  }
 
   onSubmit() {
-    console.log(this.myform);
+    if (this.myform.valid) {
+      this.authService.signUpRegular(this.myform.value.email, this.myform.value.password);
+    }
   }
 
 

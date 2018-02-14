@@ -25,7 +25,6 @@ export class LoginComponent implements OnInit {
     });
 
     if (this.authService.isLoggedIn()) {
-      console.log(this.authService.isLoggedIn())
       this.router.navigate(['calendar']);
     }
   }
@@ -41,7 +40,6 @@ export class LoginComponent implements OnInit {
   signInWithEmail(): void {
     this.authService.signInRegular(this.myform.value.email, this.myform.value.password)
       .then((res) => {
-        console.log(res);
 
         this.router.navigate(['calendar']);
       })

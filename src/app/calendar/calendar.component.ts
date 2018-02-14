@@ -47,7 +47,6 @@ export class CalendarComponent implements OnInit {
 
   ngOnInit() {
     this.eventsObservable = this.getEvents('/events');
-    console.log(this.eventsObservable);
     this.myform = new FormGroup({
       title: new FormControl('', Validators.minLength(2)),
       date: new FormControl('', Validators.minLength(1)),
@@ -91,13 +90,10 @@ export class CalendarComponent implements OnInit {
   }
 
   removeData(d, a) {
-    console.log("awd");
     const awd = this.db.list('events', ref => ref.orderByChild('id').equalTo(a.id));
-    awd.valueChanges().subscribe(ko => console.log(ko));
   }
 
   handleEvent(e, ev) {
-    console.log(ev)
     const awd = this.db.list('events', ref => ref.orderByChild('id').equalTo(ev.id));
     let y = this.db.list('events').snapshotChanges().map(actions => {
       return actions.map(action => ({ key: action.key, ...action.payload.val() }));
