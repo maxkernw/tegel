@@ -61,7 +61,6 @@ export class CalendarComponent implements OnInit {
     return this.db.list(listPath).valueChanges();
   }
 
-
   addEvent(a) {
     this.events = [];
     for (const ev of a) {
@@ -122,7 +121,7 @@ export class CalendarComponent implements OnInit {
         this.monthEvents = events;
       }
     }
-    this.myform.controls['date'].setValue(date.toISOString().substring(0, 10));
+    this.myform.controls['date'].setValue(date.toLocaleDateString());
 
   }
 
