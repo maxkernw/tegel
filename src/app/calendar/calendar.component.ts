@@ -37,7 +37,7 @@ export class CalendarComponent implements OnInit {
   ref: any;
   actions: CalendarEventAction[] = [
     {
-      label: '<h1>delete</h1>',
+      label: '<i class="fa fa-fw fa-times"></i>',
       onClick: ({ event }: { event: CalendarEvent }): void => {
         this.handleEvent('a', event);
       }

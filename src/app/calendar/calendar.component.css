@@ -8,3 +8,12 @@
 a{
     color:black;
 }
+
+h3 {
+    margin: 0 0 10px;
+  }
+  
+  pre {
+    background-color: #f00;
+    padding: 15px;
+  }
