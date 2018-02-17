@@ -37,7 +37,7 @@ export class CalendarComponent implements OnInit {
   ref: any;
   actions: CalendarEventAction[] = [
     {
-      label: '<i class="fa fa-fw fa-times"></i>',
+      label: '',
       onClick: ({ event }: { event: CalendarEvent }): void => {
         this.handleEvent('a', event);
       }
@@ -53,7 +53,9 @@ export class CalendarComponent implements OnInit {
       time: new FormControl(),
       endtime: new FormControl()
     });
-    this.authService.getUser().subscribe(x => this.currentUser = x.email);
+    this.authService.getUser().subscribe(x => {
+      if (x) { this.currentUser = x.email }
+    });
   }
   getEvents(listPath): Observable<any[]> {
     this.db.list(listPath).valueChanges().subscribe(a => this.addEvent(a));
@@ -66,7 +68,7 @@ export class CalendarComponent implements OnInit {
       this.events.push({
         start: new Date(ev.date + ' ' + ev.startime),
         end: new Date(ev.date + ' ' + ev.endtime),
-        title: `${ev.title}  user: ${ev.email} \n tid: ${ev.startime} till: ${ev.endtime}`,
+        title: `${ev.title}  användare: ${ev.email} tid: ${ev.startime} till: ${ev.endtime} <i class="fa fa-fw fa-times"></i>`,
         color: { primary: ev.color, secondary: ev.color },
         id: ev.id,
       });
@@ -87,10 +89,6 @@ export class CalendarComponent implements OnInit {
       });
       this.myform.reset();
     }
-  }
-
-  removeData(d, a) {
-    const awd = this.db.list('events', ref => ref.orderByChild('id').equalTo(a.id));
   }
 
   handleEvent(e, ev) {
@@ -117,8 +115,17 @@ export class CalendarComponent implements OnInit {
         this.monthEvents = events;
       }
     }
-    this.myform.controls['date'].setValue(date.toLocaleDateString());
 
+    this.myform.controls['date'].setValue(this.getFormattedDate(date));
+
+  }
+
+  getFormattedDate(date) {
+    const dd = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
+    const month = date.getMonth() + 1;
+    const mm = month < 10 ? '0' + month : month
+
+    return `${date.getFullYear()}-${mm}-${dd}`;
   }
 
   eventTimesChanged({ event, newStart, newEnd }: CalendarEventTimesChangedEvent): void {

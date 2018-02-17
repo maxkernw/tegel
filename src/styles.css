@@ -2,6 +2,27 @@
 @import "~bootstrap/dist/css/bootstrap.css";
 @import "~angular-calendar/css/angular-calendar.css";
 @import '~font-awesome/css/font-awesome.min.css';
+@import "../node_modules/font-awesome/css/font-awesome.css";
+
 body {
-    padding-top: 80px; 
+    padding-top: 80px;
+    font-family: 'Roboto', sans-serif; 
  }
+.btn-primary {
+    background-color: black;
+    border: none;
+}
+.btn-primary:not(:disabled):not(.disabled):active, .btn-primary:not(:disabled):not(.disabled).active, .show > .btn-primary.dropdown-toggle {
+    background-color: #FF5E4E;
+}
+.btn-primary:hover {
+    background-color: #FF5E4E;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+i:hover {
+    color: #E86B47;
+}

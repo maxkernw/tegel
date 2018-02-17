@@ -1,28 +1,5 @@
 <div>
 
-
-  <ng-template #modalContent let-close="close">
-    <div class="modal-header">
-      <h5 class="modal-title">Event action occurred</h5>
-      <button type="button" class="close" (click)="close()">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <div class="modal-body">
-      <div>
-        Action:
-        <pre>{{ modalData?.action }}</pre>
-      </div>
-      <div>
-        Event:
-        <pre>{{ modalData?.event | json }}</pre>
-      </div>
-    </div>
-    <div class="modal-footer">
-      <button type="button" class="btn btn-outline-secondary" (click)="close()">OK</button>
-    </div>
-  </ng-template>
-
   <div class="row text-center">
     <div class="col-md-4">
       <div class="btn-group">
@@ -66,10 +43,8 @@
       (eventTimesChanged)="eventTimesChanged($event)">
     </mwl-calendar-day-view>
   </div>
+  <br>
 
-  <br>
-  <br>
-  <br>
   <div>
     <form class="form-custom" [formGroup]="myform">
       <div class="form-group">
@@ -88,9 +63,6 @@
         <input type="time" class="form-control" formControlName="endtime" required>
       </div>
       <button class="btn btn-primary btn-block" (click)="pushData()">Lägg till</button>
-
     </form>
   </div>
-
-
 </div>

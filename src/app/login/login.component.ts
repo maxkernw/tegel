@@ -23,10 +23,14 @@ export class LoginComponent implements OnInit {
       email: new FormControl(),
       password: new FormControl(),
     });
-
-    if (this.authService.isLoggedIn()) {
-      this.router.navigate(['calendar']);
+    this.authService.user.subscribe((user) => {
+      if (user) {
+        this.router.navigate(['/calendar']);
+      } else {
+        console.log("Need login")
+      }
     }
+    );
   }
 
   signInWithGoogle(): void {
