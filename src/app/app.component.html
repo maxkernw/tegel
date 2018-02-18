@@ -1,10 +1,11 @@
 <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
     <a class="navbar-brand" href="#">Tegel</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" (click)="isNavbarCollapsed = !isNavbarCollapsed" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault"
+    <button class="navbar-toggler" type="button" data-toggle="collapse" (click)="toggleCollapse()" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault"
         aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
+        <span [hidden]="collapse=='open'" class="fa fa-bars fa-lg"></span>
+        <span [hidden]="collapse=='closed'" class="fa fa-times fa-lg"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarsExampleDefault" [ngbCollapse]="isNavbarCollapsed">
+    <div class="collapse navbar-collapse show"  [@collapse]="collapse" id="navbarsExampleDefault" >
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
                 <a class="nav-link" *ngIf="!isLogged()" routerLink="/register" routerLinkActive="active">Registrering</a>
@@ -19,6 +20,8 @@
         </ul>
     </div>
 </nav>
+
+
 <div class="container">
 
     <router-outlet></router-outlet>
